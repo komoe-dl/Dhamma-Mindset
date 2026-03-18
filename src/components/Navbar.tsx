@@ -27,6 +27,11 @@ export default function Navbar() {
             <Link to="/" className="text-sm font-medium text-zen-gray hover:text-zen-orange transition-colors">
               Library
             </Link>
+            {isValid && pb.authStore.model?.email === 'madgegoodence911@gmail.com' && (
+              <Link to="/admin" className="text-sm font-medium text-zen-gray hover:text-zen-orange transition-colors">
+                Admin
+              </Link>
+            )}
             {isValid ? (
               <button
                 onClick={handleLogout}
