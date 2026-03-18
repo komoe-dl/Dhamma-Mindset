@@ -13,7 +13,7 @@ export default function Footer() {
             <div className="flex items-center space-x-2">
               <Book className="w-6 h-6 text-zen-orange" />
               <span className="text-2xl font-serif font-bold tracking-tight">
-                Dhamma Mindset
+                Dhamma Library
               </span>
             </div>
             <p className="text-white/60 leading-relaxed">
@@ -26,8 +26,26 @@ export default function Footer() {
             <ul className="space-y-4 text-white/60">
               <li><a href="#" className="hover:text-zen-orange transition-colors">{t.footer.about}</a></li>
               <li><a href="#" className="hover:text-zen-orange transition-colors">{t.footer.library}</a></li>
-              <li><a href="#" className="hover:text-zen-orange transition-colors">{t.footer.meditation}</a></li>
-              <li><a href="#" className="hover:text-zen-orange transition-colors">{t.footer.contact}</a></li>
+              <li>
+                <a 
+                  href="https://mindful-project.pages.dev/" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="hover:text-zen-orange transition-colors"
+                >
+                  {t.footer.meditation}
+                </a>
+              </li>
+              <li>
+                <a 
+                  href="https://drsoelwin.mindset-it.online/" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="hover:text-zen-orange transition-colors"
+                >
+                  {t.footer.contact}
+                </a>
+              </li>
             </ul>
           </div>
 

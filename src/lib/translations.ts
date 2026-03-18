@@ -9,7 +9,7 @@ export const translations = {
       login: 'ဝင်ရန်',
     },
     hero: {
-      badge: 'ဓမ္မစိတ်ထား အကယ်ဒမီ',
+      badge: 'ဓမ္မ စာကြည့်တိုက်',
       title: 'ရှေ့စိတ်မှာ အရှိကိုမြင်၊ နောက်စိတ်မှာ သတိယှဉ်၍ ဘဝဒုက္ခကို အဖြေရှာပါ',
       subtitle: 'သမုတိနယ်မှသည် ပရမတ်နယ်သို့... ဆရာကြီး၏ ဓမ္မလမ်းညွှန်ချက်များ၊ သတိပဋ္ဌာန်ကျင့်စဉ်များနှင့် ဘဝအကျဉ်းသားအဖြစ်မှ လွတ်မြောက်ရာ အသိပညာများကို လေ့လာပါ။',
       explore: 'စာကြည့်တိုက်သို့ သွားရန်',
@@ -92,7 +92,7 @@ export const translations = {
       newsletter: 'သတင်းလွှာ',
       newsletterDesc: 'အပတ်စဉ် သတိပဋ္ဌာန် အကြံပြုချက်များနှင့် စာကြည့်တိုက် အပ်ဒိတ်များကို ရယူပါ။',
       join: 'စာရင်းသွင်းမည်',
-      rights: '၂၀၂၆ ဓမ္မစိတ်ထား စာကြည့်တိုက်။ ဆရာကြီး ဒေါက်တာစိုးလွင်၏ သင်ပြချက်များကို ဓမ္မဒါနအဖြစ် စနစ်တကျ ပြုစုထိန်းသိမ်းထားပါသည်။',
+      rights: '၂၀၂၆ ဓမ္မ စာကြည့်တိုက်။ ဆရာကြီး ဒေါက်တာစိုးလွင်၏ သင်ပြချက်များကို ဓမ္မဒါနအဖြစ် စနစ်တကျ ပြုစုထိန်းသိမ်းထားပါသည်။',
     }
   },
   en: {
@@ -103,7 +103,7 @@ export const translations = {
       login: 'Login',
     },
     hero: {
-      badge: 'Dhamma Mindset Academy',
+      badge: 'Dhamma Library',
       title: 'Observe the Present: Transform Your Life with Mindfulness.',
       subtitle: 'Bridge the Gap between Concept and Reality. Study the path to true liberation with Sayagyi’s Dhamma teachings.',
       explore: 'Explore Library',
@@ -186,7 +186,7 @@ export const translations = {
       newsletter: 'Newsletter',
       newsletterDesc: 'Receive weekly mindfulness tips and library updates.',
       join: 'Join',
-      rights: "2026 Dhamma Mindset Library. Systematically preserving Sayagyi Dr. Soe Lwin's teachings as Dhamma Dana.",
+      rights: "2026 Dhamma Library. Systematically preserving Sayagyi Dr. Soe Lwin's teachings as Dhamma Dana.",
     }
   }
 };

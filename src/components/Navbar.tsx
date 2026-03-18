@@ -1,13 +1,14 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import pb from '../lib/pocketbase';
-import { Book as BookIcon, LogOut, User, Languages } from 'lucide-react';
+import { Book as BookIcon, LogOut, User, Languages, CheckCircle2, AlertTriangle } from 'lucide-react';
 import { useLanguage } from '../lib/LanguageContext';
 
 export default function Navbar() {
   const navigate = useNavigate();
   const { language, setLanguage, t } = useLanguage();
   const isValid = pb.authStore.isValid;
+  const user = pb.authStore.model;
 
   const handleLogout = () => {
     pb.authStore.clear();
@@ -25,7 +26,7 @@ export default function Navbar() {
           <Link to="/" className="flex items-center space-x-2 group">
             <BookIcon className="w-6 h-6 text-zen-orange transition-transform group-hover:rotate-12" />
             <span className="text-xl font-serif font-bold tracking-tight text-zen-gray-dark">
-              Dhamma Mindset
+              Dhamma Library
             </span>
           </Link>
 
@@ -41,19 +42,40 @@ export default function Navbar() {
             <Link to="/" className="text-sm font-medium text-zen-gray hover:text-zen-orange transition-colors">
               {t.nav.library}
             </Link>
-            {isValid && pb.authStore.model?.role === 'admin' && (
+            {isValid && user?.role === 'admin' && (
               <Link to="/admin" className="text-sm font-medium text-zen-gray hover:text-zen-orange transition-colors">
                 {t.nav.admin}
               </Link>
             )}
             {isValid ? (
-              <button
-                onClick={handleLogout}
-                className="flex items-center space-x-1 text-sm font-medium text-zen-gray hover:text-zen-orange transition-colors"
-              >
-                <LogOut className="w-4 h-4" />
-                <span className="hidden sm:inline">{t.nav.logout}</span>
-              </button>
+              <div className="flex items-center space-x-4">
+                <div className="flex items-center space-x-2">
+                  <span className="text-sm font-medium text-zen-gray-dark hidden md:inline">
+                    {user?.name || user?.username}
+                  </span>
+                  {user?.verified ? (
+                    <div className="flex items-center space-x-1 px-2 py-0.5 rounded-full bg-green-100 text-green-700 text-[10px] font-bold uppercase tracking-wider">
+                      <CheckCircle2 className="w-3 h-3" />
+                      <span>Verified</span>
+                    </div>
+                  ) : (
+                    <div 
+                      className="flex items-center space-x-1 px-2 py-0.5 rounded-full bg-orange-100 text-orange-700 text-[10px] font-bold uppercase tracking-wider cursor-help"
+                      title="Please verify your email to unlock downloads."
+                    >
+                      <AlertTriangle className="w-3 h-3" />
+                      <span>Pending</span>
+                    </div>
+                  )}
+                </div>
+                <button
+                  onClick={handleLogout}
+                  className="flex items-center space-x-1 text-sm font-medium text-zen-gray hover:text-zen-orange transition-colors"
+                >
+                  <LogOut className="w-4 h-4" />
+                  <span className="hidden sm:inline">{t.nav.logout}</span>
+                </button>
+              </div>
             ) : (
               <Link
                 to="/login"
