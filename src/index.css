@@ -1,0 +1,29 @@
+@import "tailwindcss";
+
+@theme {
+  --color-zen-cream: #FDFCF8;
+  --color-zen-orange: #E67E22;
+  --color-zen-orange-light: #F39C12;
+  --color-zen-gray-dark: #2C3E50;
+  --color-zen-gray: #7F8C8D;
+  --color-zen-gray-light: #ECF0F1;
+  
+  --font-serif: "Playfair Display", serif;
+  --font-sans: "Inter", sans-serif;
+  
+  @keyframes spin-slow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  --animate-spin-slow: spin-slow 60s linear infinite;
+}
+
+@layer base {
+  body {
+    @apply bg-zen-cream text-zen-gray-dark font-sans;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif;
+  }
+}
