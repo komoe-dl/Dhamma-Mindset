@@ -3,8 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import pb from '../lib/pocketbase';
 import { motion } from 'motion/react';
 import { Lock, Mail, Loader2, AlertCircle } from 'lucide-react';
+import { useLanguage } from '../lib/LanguageContext';
 
 export default function Login() {
+  const { t } = useLanguage();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -37,8 +39,8 @@ export default function Login() {
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-zen-orange/10 text-zen-orange mb-6">
             <Lock className="w-8 h-8" />
           </div>
-          <h1 className="text-3xl font-serif font-bold text-zen-gray-dark">Admin Access</h1>
-          <p className="text-zen-gray mt-2">Sign in to manage the library</p>
+          <h1 className="text-3xl font-serif font-bold text-zen-gray-dark">{t.login.title}</h1>
+          <p className="text-zen-gray mt-2">{t.login.subtitle}</p>
         </div>
 
         {error && (
@@ -55,7 +57,7 @@ export default function Login() {
         <form onSubmit={handleLogin} className="space-y-6">
           <div className="space-y-2">
             <label className="text-sm font-bold text-zen-gray-dark uppercase tracking-wider ml-1">
-              Email Address
+              {t.login.email}
             </label>
             <div className="relative">
               <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-zen-gray" />
@@ -72,7 +74,7 @@ export default function Login() {
 
           <div className="space-y-2">
             <label className="text-sm font-bold text-zen-gray-dark uppercase tracking-wider ml-1">
-              Password
+              {t.login.password}
             </label>
             <div className="relative">
               <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-zen-gray" />
@@ -95,10 +97,10 @@ export default function Login() {
             {loading ? (
               <>
                 <Loader2 className="w-5 h-5 animate-spin" />
-                <span>Signing in...</span>
+                <span>{t.login.signingIn}</span>
               </>
             ) : (
-              <span>Sign In</span>
+              <span>{t.login.signIn}</span>
             )}
           </button>
         </form>

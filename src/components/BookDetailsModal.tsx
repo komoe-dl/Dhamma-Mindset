@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { X, ExternalLink, User, BookOpen } from 'lucide-react';
 import { Book } from '../types';
 import { getFileUrl } from '../lib/pocketbase';
+import { useLanguage } from '../lib/LanguageContext';
 
 interface BookDetailsModalProps {
   book: Book | null;
@@ -10,6 +11,7 @@ interface BookDetailsModalProps {
 }
 
 export default function BookDetailsModal({ book, onClose }: BookDetailsModalProps) {
+  const { t } = useLanguage();
   if (!book) return null;
 
   const fileUrl = getFileUrl(book.collectionId, book.id, book.file);
@@ -61,7 +63,7 @@ export default function BookDetailsModal({ book, onClose }: BookDetailsModalProp
               </div>
 
               <div className="prose prose-zen max-w-none">
-                <h4 className="text-sm uppercase tracking-widest text-zen-gray font-bold mb-2">Summary</h4>
+                <h4 className="text-sm uppercase tracking-widest text-zen-gray font-bold mb-2">{t.modal.summary}</h4>
                 <p className="text-zen-gray-dark/80 leading-relaxed text-lg italic">
                   "{book.summary}"
                 </p>
@@ -75,7 +77,7 @@ export default function BookDetailsModal({ book, onClose }: BookDetailsModalProp
                   className="inline-flex items-center justify-center space-x-3 bg-zen-orange hover:bg-zen-orange-light text-white px-8 py-4 rounded-full font-bold transition-all transform hover:scale-105 shadow-lg hover:shadow-zen-orange/20"
                 >
                   <BookOpen className="w-5 h-5" />
-                  <span>Read E-book</span>
+                  <span>{t.modal.readEbook}</span>
                   <ExternalLink className="w-4 h-4 opacity-50" />
                 </a>
               </div>

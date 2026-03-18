@@ -6,8 +6,10 @@ import BookCard from '../components/BookCard';
 import BookDetailsModal from '../components/BookDetailsModal';
 import { motion } from 'motion/react';
 import { Loader2, Search } from 'lucide-react';
+import { useLanguage } from '../lib/LanguageContext';
 
 export default function Home() {
+  const { t } = useLanguage();
   const [books, setBooks] = useState<Book[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedBook, setSelectedBook] = useState<Book | null>(null);
@@ -18,6 +20,7 @@ export default function Home() {
       try {
         const records = await pb.collection('books').getFullList<Book>({
           sort: '-created',
+          requestKey: null,
         });
         setBooks(records);
       } catch (error) {
@@ -42,15 +45,15 @@ export default function Home() {
       <section id="library" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 border-t border-zen-gray-light">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 space-y-6 md:space-y-0">
           <div>
-            <h2 className="text-4xl font-serif font-bold text-zen-gray-dark">The Digital Library</h2>
-            <p className="text-zen-gray mt-2">Curated wisdom for the modern practitioner.</p>
+            <h2 className="text-4xl font-serif font-bold text-zen-gray-dark">{t.home.title}</h2>
+            <p className="text-zen-gray mt-2">{t.home.subtitle}</p>
           </div>
           
           <div className="relative w-full md:w-80">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zen-gray" />
             <input
               type="text"
-              placeholder="Search by title or author..."
+              placeholder={t.home.search}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full pl-12 pr-4 py-3 rounded-full bg-white border border-zen-gray-light focus:outline-none focus:ring-2 focus:ring-zen-orange/20 focus:border-zen-orange transition-all"
@@ -61,7 +64,7 @@ export default function Home() {
         {loading ? (
           <div className="flex flex-col items-center justify-center py-32 space-y-4">
             <Loader2 className="w-10 h-10 text-zen-orange animate-spin" />
-            <p className="text-zen-gray font-medium">Gathering wisdom...</p>
+            <p className="text-zen-gray font-medium">{t.home.loading}</p>
           </div>
         ) : filteredBooks.length > 0 ? (
           <motion.div
@@ -79,7 +82,7 @@ export default function Home() {
           </motion.div>
         ) : (
           <div className="text-center py-32">
-            <p className="text-zen-gray text-lg">No books found matching your search.</p>
+            <p className="text-zen-gray text-lg">{t.home.noBooks}</p>
           </div>
         )}
       </section>

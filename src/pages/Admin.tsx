@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import pb from '../lib/pocketbase';
 import { Book } from '../types';
 import { motion } from 'motion/react';
+import { useLanguage } from '../lib/LanguageContext';
 import { 
   Plus, 
   Trash2, 
@@ -12,7 +13,7 @@ import {
   AlertCircle, 
   CheckCircle2,
   FileText,
-  Image as ImageIcon,
+  ImageIcon,
   Upload
 } from 'lucide-react';
 
@@ -25,6 +26,7 @@ interface UserRecord {
 
 export default function Admin() {
   const navigate = useNavigate();
+  const { t } = useLanguage();
   const [books, setBooks] = useState<Book[]>([]);
   const [users, setUsers] = useState<UserRecord[]>([]);
   const [loading, setLoading] = useState(true);
@@ -50,8 +52,8 @@ export default function Admin() {
     const fetchData = async () => {
       try {
         const [booksList, usersList] = await Promise.all([
-          pb.collection('books').getFullList<Book>({ sort: '-created' }),
-          pb.collection('users').getFullList<UserRecord>({ sort: '-created' })
+          pb.collection('books').getFullList<Book>({ sort: '-created', requestKey: null }),
+          pb.collection('users').getFullList<UserRecord>({ sort: '-created', requestKey: null })
         ]);
         setBooks(booksList);
         setUsers(usersList);
@@ -87,14 +89,13 @@ export default function Admin() {
     try {
       const newBook = await pb.collection('books').create<Book>(formData);
       setBooks([newBook, ...books]);
-      setSuccess('Book added successfully!');
+      setSuccess(t.admin.addSuccess);
       // Reset form
       setTitle('');
       setAuthor('');
       setSummary('');
       setFile(null);
       setCover(null);
-      // Clear file inputs manually if needed, but React state handles most
     } catch (err: any) {
       setError(err.message || 'Failed to add book.');
     } finally {
@@ -103,12 +104,12 @@ export default function Admin() {
   };
 
   const handleDeleteBook = async (id: string) => {
-    if (!window.confirm('Are you sure you want to delete this book?')) return;
+    if (!window.confirm(t.admin.deleteConfirm)) return;
 
     try {
       await pb.collection('books').delete(id);
       setBooks(books.filter(b => b.id !== id));
-      setSuccess('Book deleted successfully.');
+      setSuccess(t.admin.deleteSuccess);
     } catch (err: any) {
       setError(err.message || 'Failed to delete book.');
     }
@@ -131,12 +132,12 @@ export default function Admin() {
       >
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <h1 className="text-4xl font-serif font-bold text-zen-gray-dark">Admin Management</h1>
-            <p className="text-zen-gray mt-2">Manage your library and students</p>
+            <h1 className="text-4xl font-serif font-bold text-zen-gray-dark">{t.admin.title}</h1>
+            <p className="text-zen-gray mt-2">{t.admin.subtitle}</p>
           </div>
           <div className="flex items-center space-x-2 text-sm font-medium text-zen-orange bg-zen-orange/10 px-4 py-2 rounded-full">
             <CheckCircle2 className="w-4 h-4" />
-            <span>Verified Admin: {pb.authStore.model?.email}</span>
+            <span>{t.admin.verified}: {pb.authStore.model?.email}</span>
           </div>
         </div>
 
@@ -160,50 +161,50 @@ export default function Admin() {
             <div className="bg-white rounded-3xl shadow-xl p-8 border border-zen-gray-light sticky top-24">
               <div className="flex items-center space-x-2 mb-6">
                 <Plus className="w-5 h-5 text-zen-orange" />
-                <h2 className="text-xl font-serif font-bold text-zen-gray-dark">Add New Book</h2>
+                <h2 className="text-xl font-serif font-bold text-zen-gray-dark">{t.admin.addBook}</h2>
               </div>
 
               <form onSubmit={handleAddBook} className="space-y-5">
                 <div className="space-y-1">
-                  <label className="text-xs font-bold text-zen-gray-dark uppercase tracking-wider">Title</label>
+                  <label className="text-xs font-bold text-zen-gray-dark uppercase tracking-wider">{t.admin.bookTitle}</label>
                   <input
                     type="text"
                     required
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                     className="w-full px-4 py-3 rounded-xl bg-zen-cream border border-zen-gray-light focus:outline-none focus:ring-2 focus:ring-zen-orange/20 focus:border-zen-orange transition-all"
-                    placeholder="Book Title"
+                    placeholder={t.admin.bookTitle}
                   />
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-xs font-bold text-zen-gray-dark uppercase tracking-wider">Author</label>
+                  <label className="text-xs font-bold text-zen-gray-dark uppercase tracking-wider">{t.admin.author}</label>
                   <input
                     type="text"
                     required
                     value={author}
                     onChange={(e) => setAuthor(e.target.value)}
                     className="w-full px-4 py-3 rounded-xl bg-zen-cream border border-zen-gray-light focus:outline-none focus:ring-2 focus:ring-zen-orange/20 focus:border-zen-orange transition-all"
-                    placeholder="Author Name"
+                    placeholder={t.admin.author}
                   />
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-xs font-bold text-zen-gray-dark uppercase tracking-wider">Summary</label>
+                  <label className="text-xs font-bold text-zen-gray-dark uppercase tracking-wider">{t.admin.summary}</label>
                   <textarea
                     required
                     value={summary}
                     onChange={(e) => setSummary(e.target.value)}
                     rows={4}
                     className="w-full px-4 py-3 rounded-xl bg-zen-cream border border-zen-gray-light focus:outline-none focus:ring-2 focus:ring-zen-orange/20 focus:border-zen-orange transition-all resize-none"
-                    placeholder="Brief summary of the book..."
+                    placeholder={t.admin.summary}
                   />
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-1">
                     <label className="text-xs font-bold text-zen-gray-dark uppercase tracking-wider flex items-center gap-1">
-                      <FileText className="w-3 h-3" /> PDF File
+                      <FileText className="w-3 h-3" /> {t.admin.pdfFile}
                     </label>
                     <div className="relative">
                       <input
@@ -220,7 +221,7 @@ export default function Admin() {
                       >
                         <Upload className={`w-5 h-5 mb-1 ${file ? 'text-zen-orange' : 'text-zen-gray'}`} />
                         <span className="text-[10px] text-center truncate w-full px-2">
-                          {file ? file.name : 'Choose PDF'}
+                          {file ? file.name : t.admin.choosePdf}
                         </span>
                       </label>
                     </div>
@@ -228,7 +229,7 @@ export default function Admin() {
 
                   <div className="space-y-1">
                     <label className="text-xs font-bold text-zen-gray-dark uppercase tracking-wider flex items-center gap-1">
-                      <ImageIcon className="w-3 h-3" /> Cover
+                      <ImageIcon className="w-3 h-3" /> {t.admin.coverImage}
                     </label>
                     <div className="relative">
                       <input
@@ -245,7 +246,7 @@ export default function Admin() {
                       >
                         <Upload className={`w-5 h-5 mb-1 ${cover ? 'text-zen-orange' : 'text-zen-gray'}`} />
                         <span className="text-[10px] text-center truncate w-full px-2">
-                          {cover ? cover.name : 'Choose Image'}
+                          {cover ? cover.name : t.admin.chooseImage}
                         </span>
                       </label>
                     </div>
@@ -260,12 +261,12 @@ export default function Admin() {
                   {submitting ? (
                     <>
                       <Loader2 className="w-5 h-5 animate-spin" />
-                      <span>Uploading...</span>
+                      <span>{t.admin.uploading}</span>
                     </>
                   ) : (
                     <>
                       <Plus className="w-5 h-5" />
-                      <span>Add to Library</span>
+                      <span>{t.admin.addToLibrary}</span>
                     </>
                   )}
                 </button>
@@ -280,17 +281,17 @@ export default function Admin() {
               <div className="flex items-center justify-between mb-8">
                 <div className="flex items-center space-x-2">
                   <BookOpen className="w-5 h-5 text-zen-orange" />
-                  <h2 className="text-xl font-serif font-bold text-zen-gray-dark">Library Inventory</h2>
+                  <h2 className="text-xl font-serif font-bold text-zen-gray-dark">{t.admin.inventory}</h2>
                 </div>
-                <span className="text-sm text-zen-gray font-medium">{books.length} Books</span>
+                <span className="text-sm text-zen-gray font-medium">{books.length} {t.admin.booksCount}</span>
               </div>
 
               <div className="overflow-x-auto">
                 <table className="w-full text-left">
                   <thead>
                     <tr className="border-b border-zen-gray-light">
-                      <th className="pb-4 font-bold text-xs uppercase tracking-wider text-zen-gray">Book</th>
-                      <th className="pb-4 font-bold text-xs uppercase tracking-wider text-zen-gray">Author</th>
+                      <th className="pb-4 font-bold text-xs uppercase tracking-wider text-zen-gray">{t.nav.library}</th>
+                      <th className="pb-4 font-bold text-xs uppercase tracking-wider text-zen-gray">{t.admin.author}</th>
                       <th className="pb-4 font-bold text-xs uppercase tracking-wider text-zen-gray text-right">Actions</th>
                     </tr>
                   </thead>
@@ -322,13 +323,6 @@ export default function Admin() {
                         </td>
                       </tr>
                     ))}
-                    {books.length === 0 && (
-                      <tr>
-                        <td colSpan={3} className="py-12 text-center text-zen-gray italic">
-                          No books in the library yet.
-                        </td>
-                      </tr>
-                    )}
                   </tbody>
                 </table>
               </div>
@@ -339,18 +333,18 @@ export default function Admin() {
               <div className="flex items-center justify-between mb-8">
                 <div className="flex items-center space-x-2">
                   <Users className="w-5 h-5 text-zen-orange" />
-                  <h2 className="text-xl font-serif font-bold text-zen-gray-dark">Registered Students</h2>
+                  <h2 className="text-xl font-serif font-bold text-zen-gray-dark">{t.admin.students}</h2>
                 </div>
-                <span className="text-sm text-zen-gray font-medium">{users.length} Students</span>
+                <span className="text-sm text-zen-gray font-medium">{users.length} {t.admin.studentsCount}</span>
               </div>
 
               <div className="overflow-x-auto">
                 <table className="w-full text-left">
                   <thead>
                     <tr className="border-b border-zen-gray-light">
-                      <th className="pb-4 font-bold text-xs uppercase tracking-wider text-zen-gray">Name</th>
-                      <th className="pb-4 font-bold text-xs uppercase tracking-wider text-zen-gray">Email</th>
-                      <th className="pb-4 font-bold text-xs uppercase tracking-wider text-zen-gray text-right">Joined</th>
+                      <th className="pb-4 font-bold text-xs uppercase tracking-wider text-zen-gray">{t.admin.name}</th>
+                      <th className="pb-4 font-bold text-xs uppercase tracking-wider text-zen-gray">{t.admin.email}</th>
+                      <th className="pb-4 font-bold text-xs uppercase tracking-wider text-zen-gray text-right">{t.admin.joined}</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-zen-gray-light">
@@ -363,13 +357,6 @@ export default function Admin() {
                         </td>
                       </tr>
                     ))}
-                    {users.length === 0 && (
-                      <tr>
-                        <td colSpan={3} className="py-12 text-center text-zen-gray italic">
-                          No students registered yet.
-                        </td>
-                      </tr>
-                    )}
                   </tbody>
                 </table>
               </div>
