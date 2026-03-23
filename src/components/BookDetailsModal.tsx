@@ -5,6 +5,7 @@ import { Book } from '../types';
 import { getFileUrl } from '../lib/pocketbase';
 import { useLanguage } from '../lib/LanguageContext';
 import DhammaDiscussion from './DhammaDiscussion';
+import DefaultCover from './DefaultCover';
 
 interface BookDetailsModalProps {
   book: Book | null;
@@ -16,7 +17,7 @@ export default function BookDetailsModal({ book, onClose }: BookDetailsModalProp
   if (!book) return null;
 
   const fileUrl = getFileUrl(book.collectionId, book.id, book.file);
-  const coverUrl = getFileUrl(book.collectionId, book.id, book.cover);
+  const coverUrl = book.cover ? getFileUrl(book.collectionId, book.id, book.cover) : null;
 
   return (
     <AnimatePresence>
@@ -43,12 +44,16 @@ export default function BookDetailsModal({ book, onClose }: BookDetailsModalProp
           </button>
 
           <div className="w-full md:w-2/5 h-64 md:h-auto overflow-hidden">
-            <img
-              src={coverUrl}
-              alt={book.title}
-              className="w-full h-full object-cover"
-              referrerPolicy="no-referrer"
-            />
+            {coverUrl ? (
+              <img
+                src={coverUrl}
+                alt={book.title}
+                className="w-full h-full object-cover"
+                referrerPolicy="no-referrer"
+              />
+            ) : (
+              <DefaultCover title={book.title} author={book.author} />
+            )}
           </div>
 
           <div className="w-full md:w-3/5 p-8 md:p-12 overflow-y-auto">
@@ -96,6 +101,23 @@ export default function BookDetailsModal({ book, onClose }: BookDetailsModalProp
                   <Download className="w-5 h-5" />
                   <span>{t.modal.download}</span>
                 </a>
+
+                {book.google_doc_link && (
+                  <div className="w-full space-y-2">
+                    <a
+                      href={book.google_doc_link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center space-x-3 bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-full font-bold transition-all transform hover:scale-105 shadow-lg hover:shadow-blue-600/20"
+                    >
+                      <ExternalLink className="w-5 h-5" />
+                      <span>{t.modal.collaborate}</span>
+                    </a>
+                    <p className="text-xs text-zen-gray-dark/60 italic ml-4">
+                      {t.modal.googleDocInfo}
+                    </p>
+                  </div>
+                )}
               </div>
 
               {/* Dhamma Discussion Section */}

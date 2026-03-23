@@ -4,6 +4,7 @@ import pb from '../lib/pocketbase';
 import { Book } from '../types';
 import { motion } from 'motion/react';
 import { useLanguage } from '../lib/LanguageContext';
+import DefaultCover from '../components/DefaultCover';
 import { 
   Plus, 
   Trash2, 
@@ -42,6 +43,7 @@ export default function Admin() {
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
   const [summary, setSummary] = useState('');
+  const [googleDocLink, setGoogleDocLink] = useState('');
   const [file, setFile] = useState<File | null>(null);
   const [cover, setCover] = useState<File | null>(null);
   const [editingBook, setEditingBook] = useState<Book | null>(null);
@@ -87,8 +89,8 @@ export default function Admin() {
   const handleAddBook = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!editingBook && (!file || !cover)) {
-      setError('Please select both a PDF file and a cover image.');
+    if (!editingBook && !file) {
+      setError('Please select a PDF file.');
       return;
     }
 
@@ -100,6 +102,7 @@ export default function Admin() {
     formData.append('title', title);
     formData.append('author', author);
     formData.append('summary', summary);
+    formData.append('google_doc_link', googleDocLink);
     if (file) formData.append('file', file);
     if (cover) formData.append('cover', cover);
 
@@ -124,6 +127,7 @@ export default function Admin() {
       setTitle('');
       setAuthor('');
       setSummary('');
+      setGoogleDocLink('');
       setFile(null);
       setCover(null);
     } catch (err: any) {
@@ -138,6 +142,7 @@ export default function Admin() {
     setTitle(book.title);
     setAuthor(book.author);
     setSummary(book.summary);
+    setGoogleDocLink(book.google_doc_link || '');
     setFile(null);
     setCover(null);
     setError('');
@@ -150,6 +155,7 @@ export default function Admin() {
     setTitle('');
     setAuthor('');
     setSummary('');
+    setGoogleDocLink('');
     setFile(null);
     setCover(null);
     setError('');
@@ -324,6 +330,17 @@ export default function Admin() {
                   />
                 </div>
 
+                <div className="space-y-1">
+                  <label className="text-xs font-bold text-zen-gray-dark uppercase tracking-wider">{t.admin.googleDocLink}</label>
+                  <input
+                    type="url"
+                    value={googleDocLink}
+                    onChange={(e) => setGoogleDocLink(e.target.value)}
+                    className="w-full px-4 py-3 rounded-xl bg-zen-cream border border-zen-gray-light focus:outline-none focus:ring-2 focus:ring-zen-orange/20 focus:border-zen-orange transition-all"
+                    placeholder="https://docs.google.com/document/d/..."
+                  />
+                </div>
+
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-1">
                     <label className="text-xs font-bold text-zen-gray-dark uppercase tracking-wider flex items-center gap-1">
@@ -352,13 +369,12 @@ export default function Admin() {
 
                   <div className="space-y-1">
                     <label className="text-xs font-bold text-zen-gray-dark uppercase tracking-wider flex items-center gap-1">
-                      <ImageIcon className="w-3 h-3" /> {t.admin.coverImage}
+                      <ImageIcon className="w-3 h-3" /> {t.admin.coverImage} (Optional)
                     </label>
                     <div className="relative">
                       <input
                         type="file"
                         accept="image/*"
-                        required={!editingBook}
                         onChange={(e) => setCover(e.target.files?.[0] || null)}
                         className="hidden"
                         id="cover-upload"
@@ -437,12 +453,16 @@ export default function Admin() {
                         <td className="py-4">
                           <div className="flex items-center space-x-3">
                             <div className="w-10 h-14 bg-zen-gray-light rounded overflow-hidden flex-shrink-0">
-                              <img 
-                                src={pb.files.getUrl(book, book.cover)} 
-                                alt="" 
-                                className="w-full h-full object-cover"
-                                referrerPolicy="no-referrer"
-                              />
+                              {book.cover ? (
+                                <img 
+                                  src={pb.files.getUrl(book, book.cover)} 
+                                  alt="" 
+                                  className="w-full h-full object-cover"
+                                  referrerPolicy="no-referrer"
+                                />
+                              ) : (
+                                <DefaultCover title={book.title} author={book.author} className="text-[4px] p-1 space-y-1" />
+                              )}
                             </div>
                             <span className="font-medium text-zen-gray-dark">{book.title}</span>
                           </div>

@@ -10,6 +10,7 @@ export interface Book {
   file: string;
   cover: string;
   category?: string;
+  google_doc_link?: string;
   uploaded_by?: string;
   sadhu_count?: number;
   expand?: {

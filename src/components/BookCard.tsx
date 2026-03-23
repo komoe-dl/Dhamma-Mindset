@@ -3,6 +3,7 @@ import { Book } from '../types';
 import { getFileUrl } from '../lib/pocketbase';
 import { motion } from 'motion/react';
 import { useLanguage } from '../lib/LanguageContext';
+import DefaultCover from './DefaultCover';
 
 interface BookCardProps {
   book: Book;
@@ -11,7 +12,7 @@ interface BookCardProps {
 
 const BookCard: React.FC<BookCardProps> = ({ book, onClick }) => {
   const { t } = useLanguage();
-  const coverUrl = getFileUrl(book.collectionId, book.id, book.cover);
+  const coverUrl = book.cover ? getFileUrl(book.collectionId, book.id, book.cover) : null;
 
   const getCategoryLabel = (cat?: string) => {
     if (!cat) return null;
@@ -25,12 +26,16 @@ const BookCard: React.FC<BookCardProps> = ({ book, onClick }) => {
       onClick={() => onClick(book)}
     >
       <div className="relative aspect-[3/4] overflow-hidden rounded-xl shadow-lg transition-shadow group-hover:shadow-2xl bg-zen-gray-light">
-        <img
-          src={coverUrl}
-          alt={book.title}
-          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
-          referrerPolicy="no-referrer"
-        />
+        {coverUrl ? (
+          <img
+            src={coverUrl}
+            alt={book.title}
+            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+            referrerPolicy="no-referrer"
+          />
+        ) : (
+          <DefaultCover title={book.title} author={book.author} />
+        )}
         
         {book.category && (
           <div className="absolute top-4 left-4 z-10">

@@ -3,6 +3,7 @@ export type Language = 'my' | 'en';
 export const translations = {
   my: {
     nav: {
+      title: 'ဓမ္မ စာကြည့်တိုက်',
       library: 'စာကြည့်တိုက်',
       admin: 'စီမံခန့်ခွဲသူ',
       logout: 'ထွက်ရန်',
@@ -36,6 +37,8 @@ export const translations = {
       summary: 'အကျဉ်းချုပ်',
       readNow: 'ဖတ်ရှုရန်',
       download: 'ဒေါင်းလုဒ်ဆွဲရန်',
+      collaborate: 'ဝိုင်းဝန်းတည်းဖြတ်ရန် (Google Doc)',
+      googleDocInfo: 'မှတ်ချက် - ပြင်ဆင်ရန်အတွက် Google အကောင့်ရှိရန် လိုအပ်ပြီး ပိုင်ရှင်ထံမှ ခွင့်ပြုချက် (Permission) တောင်းခံရပါမည်။',
       dhammaDiscussion: 'ဓမ္မစကားဝိုင်း',
       sadhu: 'သာဓု',
       sadhuMessage: 'သာဓု... သာဓု... သာဓု...',
@@ -100,6 +103,7 @@ export const translations = {
       updateSuccess: 'စာအုပ်အချက်အလက် ပြင်ဆင်ပြီးပါပြီ။',
       uploadedBy: 'တင်သွင်းသူ',
       category: 'ကဏ္ဍ',
+      googleDocLink: 'Google Doc Link (Optional)',
       resetPassword: 'လျှို့ဝှက်နံပါတ် ပြန်လည်သတ်မှတ်ရန်',
       resetPasswordSuccess: 'လျှို့ဝှက်နံပါတ် ပြန်လည်သတ်မှတ်ခြင်း အောင်မြင်ပါသည်။ ကျေးဇူးပြု၍ ကျောင်းသားအား အကြောင်းကြားပါ။',
       uploadBook: '+ ဓမ္မစာအုပ် တင်ရန်',
@@ -139,6 +143,7 @@ export const translations = {
   },
   en: {
     nav: {
+      title: 'Dhamma Library',
       library: 'Library',
       admin: 'Admin',
       logout: 'Logout',
@@ -172,6 +177,8 @@ export const translations = {
       summary: 'Summary',
       readNow: 'Read Now',
       download: 'Download',
+      collaborate: 'Collaborate (Google Doc)',
+      googleDocInfo: 'Note: You need a Google account to edit and must request permission from the owner.',
       dhammaDiscussion: 'Dhamma Discussion',
       sadhu: 'Sadhu',
       sadhuMessage: 'Sadhu... Sadhu... Sadhu...',
@@ -236,6 +243,7 @@ export const translations = {
       updateSuccess: 'Book updated successfully!',
       uploadedBy: 'Uploaded By',
       category: 'Category',
+      googleDocLink: 'Google Doc Link (Optional)',
       resetPassword: 'Reset Password',
       resetPasswordSuccess: 'Password reset successful! Please inform the student.',
       uploadBook: '+ Upload Dhamma Ebook',

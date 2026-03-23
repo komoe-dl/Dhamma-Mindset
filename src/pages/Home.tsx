@@ -5,6 +5,7 @@ import Hero from '../components/Hero';
 import BookCard from '../components/BookCard';
 import BookDetailsModal from '../components/BookDetailsModal';
 import { motion, AnimatePresence } from 'motion/react';
+import DefaultCover from '../components/DefaultCover';
 import { 
   Loader2, 
   Search, 
@@ -62,8 +63,8 @@ export default function Home() {
 
   const handleUpload = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!file || !cover) {
-      setUploadError('Please select both a PDF file and a cover image.');
+    if (!file) {
+      setUploadError('Please select a PDF file.');
       return;
     }
 
@@ -326,13 +327,12 @@ export default function Home() {
 
                     <div className="space-y-2">
                       <label className="text-sm font-bold text-zen-gray-dark uppercase tracking-wider flex items-center gap-2">
-                        <ImageIcon className="w-4 h-4" /> {t.admin.coverImage}
+                        <ImageIcon className="w-4 h-4" /> {t.admin.coverImage} (Optional)
                       </label>
                       <div className="relative">
                         <input
                           type="file"
                           accept="image/*"
-                          required
                           onChange={(e) => setCover(e.target.files?.[0] || null)}
                           className="hidden"
                           id="user-cover-upload"
