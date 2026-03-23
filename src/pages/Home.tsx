@@ -78,10 +78,7 @@ export default function Home() {
     formData.append('author', author);
     formData.append('summary', summary);
     formData.append('category', category);
-    
-    if (googleDocLink.trim()) {
-      formData.append('google_doc_link', googleDocLink.trim());
-    }
+    formData.append('google_doc_link', googleDocLink.trim());
     
     if (file) {
       const sanitizedFile = sanitizeFileName(file, 'dhamma-student-upload');

@@ -105,10 +105,7 @@ export default function Admin() {
     formData.append('author', author);
     formData.append('summary', summary);
     formData.append('category', category);
-    
-    if (googleDocLink.trim()) {
-      formData.append('google_doc_link', googleDocLink.trim());
-    }
+    formData.append('google_doc_link', googleDocLink.trim());
     
     if (file) {
       const sanitizedFile = sanitizeFileName(file, 'dhamma-ebook');
@@ -325,49 +322,49 @@ export default function Admin() {
               </div>
 
               <form onSubmit={handleAddBook} className="space-y-5">
-                <div className="space-y-1">
-                  <label className="text-xs font-bold text-zen-gray-dark uppercase tracking-wider">{t.admin.bookTitle}</label>
+                <div className="space-y-2">
+                  <label className="text-sm font-bold text-zen-gray-dark uppercase tracking-wider">{t.admin.bookTitle}</label>
                   <input
                     type="text"
                     required
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
-                    className="w-full px-4 py-3 rounded-xl bg-zen-cream border border-zen-gray-light focus:outline-none focus:ring-2 focus:ring-zen-orange/20 focus:border-zen-orange transition-all"
+                    className="w-full px-5 py-4 rounded-xl bg-zen-cream border border-zen-gray-light focus:outline-none focus:ring-2 focus:ring-zen-orange/20 focus:border-zen-orange transition-all text-lg"
                     placeholder={t.admin.bookTitle}
                   />
                 </div>
 
-                <div className="space-y-1">
-                  <label className="text-xs font-bold text-zen-gray-dark uppercase tracking-wider">{t.admin.author}</label>
+                <div className="space-y-2">
+                  <label className="text-sm font-bold text-zen-gray-dark uppercase tracking-wider">{t.admin.author}</label>
                   <input
                     type="text"
                     required
                     value={author}
                     onChange={(e) => setAuthor(e.target.value)}
-                    className="w-full px-4 py-3 rounded-xl bg-zen-cream border border-zen-gray-light focus:outline-none focus:ring-2 focus:ring-zen-orange/20 focus:border-zen-orange transition-all"
+                    className="w-full px-5 py-4 rounded-xl bg-zen-cream border border-zen-gray-light focus:outline-none focus:ring-2 focus:ring-zen-orange/20 focus:border-zen-orange transition-all text-lg"
                     placeholder={t.admin.author}
                   />
                 </div>
 
-                <div className="space-y-1">
-                  <label className="text-xs font-bold text-zen-gray-dark uppercase tracking-wider">{t.admin.summary}</label>
+                <div className="space-y-2">
+                  <label className="text-sm font-bold text-zen-gray-dark uppercase tracking-wider">{t.admin.summary}</label>
                   <textarea
                     required
                     value={summary}
                     onChange={(e) => setSummary(e.target.value)}
                     rows={4}
-                    className="w-full px-4 py-3 rounded-xl bg-zen-cream border border-zen-gray-light focus:outline-none focus:ring-2 focus:ring-zen-orange/20 focus:border-zen-orange transition-all resize-none"
+                    className="w-full px-5 py-4 rounded-xl bg-zen-cream border border-zen-gray-light focus:outline-none focus:ring-2 focus:ring-zen-orange/20 focus:border-zen-orange transition-all resize-none text-lg"
                     placeholder={t.admin.summary}
                   />
                 </div>
 
-                <div className="space-y-1">
-                  <label className="text-xs font-bold text-zen-gray-dark uppercase tracking-wider">{t.admin.category}</label>
+                <div className="space-y-2">
+                  <label className="text-sm font-bold text-zen-gray-dark uppercase tracking-wider">{t.admin.category}</label>
                   <select
                     required
                     value={category}
                     onChange={(e) => setCategory(e.target.value)}
-                    className="w-full px-4 py-3 rounded-xl bg-zen-cream border border-zen-gray-light focus:outline-none focus:ring-2 focus:ring-zen-orange/20 focus:border-zen-orange transition-all appearance-none cursor-pointer"
+                    className="w-full px-5 py-4 rounded-xl bg-zen-cream border border-zen-gray-light focus:outline-none focus:ring-2 focus:ring-zen-orange/20 focus:border-zen-orange transition-all appearance-none cursor-pointer text-lg"
                   >
                     <option value="" disabled>Select Category</option>
                     {categories.map(c => (
@@ -376,13 +373,13 @@ export default function Admin() {
                   </select>
                 </div>
 
-                <div className="space-y-1">
-                  <label className="text-xs font-bold text-zen-gray-dark uppercase tracking-wider">{t.admin.googleDocLink}</label>
+                <div className="space-y-2">
+                  <label className="text-sm font-bold text-zen-gray-dark uppercase tracking-wider">{t.admin.googleDocLink}</label>
                   <input
                     type="url"
                     value={googleDocLink}
                     onChange={(e) => setGoogleDocLink(e.target.value)}
-                    className="w-full px-4 py-3 rounded-xl bg-zen-cream border border-zen-gray-light focus:outline-none focus:ring-2 focus:ring-zen-orange/20 focus:border-zen-orange transition-all"
+                    className="w-full px-5 py-4 rounded-xl bg-zen-cream border border-zen-gray-light focus:outline-none focus:ring-2 focus:ring-zen-orange/20 focus:border-zen-orange transition-all text-lg"
                     placeholder="https://docs.google.com/document/d/..."
                   />
                 </div>
