@@ -17,6 +17,11 @@ export const translations = {
       subtitle: 'သမုတိနယ်မှသည် ပရမတ်နယ်သို့... ဆရာကြီး၏ ဓမ္မလမ်းညွှန်ချက်များ၊ သတိပဋ္ဌာန်ကျင့်စဉ်များနှင့် ဘဝအကျဉ်းသားအဖြစ်မှ လွတ်မြောက်ရာ အသိပညာများကို လေ့လာပါ။',
       explore: 'စာကြည့်တိုက်သို့ သွားရန်',
       learnMore: 'အသံမှ စာအုပ်သို့',
+      geminiGem: 'Gemini Summary Writer',
+      aiWriter: 'Writer',
+      aiSummary: 'Summary',
+      aiTranslator: 'Translator',
+      aiHtmlMaker: 'HTML Maker',
     },
     home: {
       title: 'ဒစ်ဂျစ်တယ် စာကြည့်တိုက်',
@@ -158,6 +163,11 @@ export const translations = {
       subtitle: 'Bridge the Gap between Concept and Reality. Study the path to true liberation with Sayagyi’s Dhamma teachings.',
       explore: 'Explore Library',
       learnMore: 'Audio to E-book',
+      geminiGem: 'Gemini Summary Writer',
+      aiWriter: 'Writer',
+      aiSummary: 'Summary',
+      aiTranslator: 'Translator',
+      aiHtmlMaker: 'HTML Maker',
     },
     home: {
       title: 'The Digital Library',

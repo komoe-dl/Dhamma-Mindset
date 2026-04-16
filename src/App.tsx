@@ -14,7 +14,6 @@ import SignUp from './pages/SignUp';
 import Admin from './pages/Admin';
 import Profile from './pages/Profile';
 import Guide from './pages/Guide';
-import FloatingAiButtons from './components/FloatingAiButtons';
 
 export default function App() {
   return (
@@ -33,7 +32,6 @@ export default function App() {
             </Routes>
           </main>
           <Footer />
-          <FloatingAiButtons />
         </div>
       </Router>
     </LanguageProvider>

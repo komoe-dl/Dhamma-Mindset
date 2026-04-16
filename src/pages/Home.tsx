@@ -15,7 +15,13 @@ import {
   FileText, 
   ImageIcon, 
   CheckCircle2, 
-  AlertCircle 
+  AlertCircle,
+  Bot,
+  PenTool,
+  FileSearch,
+  Languages,
+  Sparkles,
+  Code
 } from 'lucide-react';
 import { useLanguage } from '../lib/LanguageContext';
 import { sanitizeFileName } from '../lib/utils';
@@ -27,6 +33,7 @@ export default function Home() {
   const [selectedBook, setSelectedBook] = useState<Book | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
+  const [isAiMenuOpen, setIsAiMenuOpen] = useState(false);
   
   // Upload Modal State
   const [showUploadModal, setShowUploadModal] = useState(false);
@@ -423,6 +430,112 @@ export default function Home() {
         book={selectedBook}
         onClose={() => setSelectedBook(null)}
       />
+
+      {/* Three-in-One AI Floating Action Button */}
+      <div className="fixed bottom-8 right-8 z-50 flex flex-col items-end">
+        <AnimatePresence>
+          {isAiMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: 20, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 20, scale: 0.95 }}
+              className="flex flex-col items-end gap-3 mb-4"
+            >
+              {/* Writer Gem */}
+              <motion.a
+                href="https://gemini.google.com/gem/1gnW-Mt69wlYvExKi1f5uNo3oUzU2kxyj?usp=sharing"
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.05, x: -5 }}
+                whileTap={{ scale: 0.95 }}
+                className="flex items-center gap-3 px-5 py-3 bg-[#1a3a3a] text-white rounded-2xl shadow-xl border border-white/10 hover:bg-[#2a4a4a] transition-all group"
+              >
+                <span className="font-bold text-xs uppercase tracking-widest">{t.hero.aiWriter}</span>
+                <div className="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center group-hover:bg-white/20 transition-colors">
+                  <PenTool className="w-5 h-5 text-zen-orange" />
+                </div>
+              </motion.a>
+
+              {/* Summary Gem */}
+              <motion.a
+                href="https://gemini.google.com/gem/1Fkxsel4dV-Uj3r22g5h1jpNF21DO9w8z?usp=sharing"
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.05, x: -5 }}
+                whileTap={{ scale: 0.95 }}
+                className="flex items-center gap-3 px-5 py-3 bg-[#1a3a3a] text-white rounded-2xl shadow-xl border border-white/10 hover:bg-[#2a4a4a] transition-all group"
+              >
+                <span className="font-bold text-xs uppercase tracking-widest">{t.hero.aiSummary}</span>
+                <div className="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center group-hover:bg-white/20 transition-colors">
+                  <FileSearch className="w-5 h-5 text-zen-orange" />
+                </div>
+              </motion.a>
+
+              {/* Translator Gem */}
+              <motion.a
+                href="https://gemini.google.com/gem/1jCz-YEC2AntA-LxKcnVr4fp-ctb49L6r?usp=sharing"
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.05, x: -5 }}
+                whileTap={{ scale: 0.95 }}
+                className="flex items-center gap-3 px-5 py-3 bg-[#1a3a3a] text-white rounded-2xl shadow-xl border border-white/10 hover:bg-[#2a4a4a] transition-all group"
+              >
+                <span className="font-bold text-xs uppercase tracking-widest">{t.hero.aiTranslator}</span>
+                <div className="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center group-hover:bg-white/20 transition-colors">
+                  <Languages className="w-5 h-5 text-zen-orange" />
+                </div>
+              </motion.a>
+
+              {/* HTML Maker Gem */}
+              <motion.a
+                href="https://gemini.google.com/gem/1Bf8-BC2JoTgkXvex_oIH1BBp-QB9SYa6?usp=sharing"
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.05, x: -5 }}
+                whileTap={{ scale: 0.95 }}
+                className="flex items-center gap-3 px-5 py-3 bg-[#1a3a3a] text-white rounded-2xl shadow-xl border border-white/10 hover:bg-[#2a4a4a] transition-all group"
+              >
+                <span className="font-bold text-xs uppercase tracking-widest">{t.hero.aiHtmlMaker}</span>
+                <div className="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center group-hover:bg-white/20 transition-colors">
+                  <Code className="w-5 h-5 text-zen-orange" />
+                </div>
+              </motion.a>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Main AI Button */}
+        <motion.button
+          onClick={() => setIsAiMenuOpen(!isAiMenuOpen)}
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className={`flex items-center gap-3 px-4 py-2.5 rounded-full shadow-[0_15px_40px_rgba(0,0,0,0.3)] transition-all group border border-white/20 backdrop-blur-xl ${
+            isAiMenuOpen ? 'bg-zen-orange text-white' : 'bg-[#1a3a3a] text-white'
+          }`}
+        >
+          <div className="relative">
+            {!isAiMenuOpen && (
+              <div className="absolute inset-0 bg-zen-orange/30 rounded-full animate-ping group-hover:animate-none" />
+            )}
+            <div className={`relative w-9 h-9 rounded-full flex items-center justify-center transition-all duration-500 border border-white/10 ${
+              isAiMenuOpen ? 'bg-white/20 rotate-90' : 'bg-gradient-to-br from-white/10 to-white/5 group-hover:from-white/20 group-hover:to-white/10'
+            }`}>
+              {isAiMenuOpen ? (
+                <X className="w-5 h-5" />
+              ) : (
+                <Bot className="w-5 h-5 text-zen-orange drop-shadow-[0_0_6px_rgba(245,158,11,0.5)]" />
+              )}
+            </div>
+          </div>
+          <span className={`font-bold tracking-widest text-xs uppercase whitespace-nowrap pr-1 transition-colors ${
+            isAiMenuOpen ? 'text-white' : 'text-zen-orange'
+          }`}>
+            {isAiMenuOpen ? 'Close' : 'Dhamma AI'}
+          </span>
+        </motion.button>
+      </div>
     </div>
   );
 }
